@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
 using Shopping.Data.Entities;
@@ -22,9 +17,9 @@ namespace Shopping.Controllers
         // GET: Countries
         public async Task<IActionResult> Index()
         {
-              return _context.Countries != null ? 
-                          View(await _context.Countries.ToListAsync()) :
-                          Problem("Entity set 'DataContext.Countries'  is null.");
+            return _context.Countries != null ?
+                        View(await _context.Countries.ToListAsync()) :
+                        Problem("Entity set 'DataContext.Countries'  is null.");
         }
 
         // GET: Countries/Details/5
@@ -56,7 +51,7 @@ namespace Shopping.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Country country)
+        public async Task<IActionResult> Create(Country country)
         {
             if (ModelState.IsValid)
             {
@@ -150,14 +145,14 @@ namespace Shopping.Controllers
             {
                 _context.Countries.Remove(country);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CountryExists(int id)
         {
-          return (_context.Countries?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Countries?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
