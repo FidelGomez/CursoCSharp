@@ -45,7 +45,7 @@ namespace Shopping.Controllers
 
         public async Task<IActionResult> DetailsState(int? id)
         {
-            if (id == null || _context.Countries == null)
+            if (id == null || _context.States == null)
             {
                 return NotFound();
             }
@@ -60,6 +60,24 @@ namespace Shopping.Controllers
             }
 
             return View(state);
+        }
+
+        public async Task<IActionResult> DetailsCity(int? id)
+        {
+            if (id == null || _context.Cities == null)
+            {
+                return NotFound();
+            }
+
+            var city = await _context.Cities
+                .Include(s => s.State)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            return View(city);
         }
 
         // GET: Countries/Create
@@ -343,7 +361,87 @@ namespace Shopping.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Countries/Create
+        // GET: States/Delete/5
+        public async Task<IActionResult> DeleteState(int? id)
+        {
+            if (id == null || _context.States == null)
+            {
+                return NotFound();
+            }
+
+            var states = await _context.States
+                .Include(c => c.Country)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (states == null)
+            {
+                return NotFound();
+            }
+
+            return View(states);
+        }
+
+        // POST: States/Delete/5
+        [HttpPost, ActionName("DeleteState")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteStateConfirmed(int id)
+        {
+            if (_context.States == null)
+            {
+                return Problem("Entity set 'DataContext.States'  is null.");
+            }
+            var state = await _context.States
+                .Include(c => c.Country)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (state != null)
+            {
+                _context.States.Remove(state);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details),new { Id = state.Country.Id });
+        }
+
+        // GET: Cities/Delete/5
+        public async Task<IActionResult> DeleteCity(int? id)
+        {
+            if (id == null || _context.Cities == null)
+            {
+                return NotFound();
+            }
+
+            var cities = await _context.Cities
+                .Include(c => c.State)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (cities == null)
+            {
+                return NotFound();
+            }
+
+            return View(cities);
+        }
+
+        // POST: Cities/Delete/5
+        [HttpPost, ActionName("DeleteCity")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteCityConfirmed(int id)
+        {
+            if (_context.Cities == null)
+            {
+                return Problem("Entity set 'DataContext.Cities'  is null.");
+            }
+            var city = await _context.Cities
+                .Include(c => c.State)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (city != null)
+            {
+                _context.Cities.Remove(city);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DetailsState), new { Id = city.State.Id });
+        }
+
+        // GET: States/Create
         public async Task<IActionResult> AddState(int? id)
         {
             if (id == null)
