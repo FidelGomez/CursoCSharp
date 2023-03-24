@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Shopping.Views;
+using Shopping.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shopping.Data.Entities

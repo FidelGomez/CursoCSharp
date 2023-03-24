@@ -1,4 +1,4 @@
-﻿namespace Shopping.Views
+﻿namespace Shopping.Enums
 {
     public enum UserType
     {
