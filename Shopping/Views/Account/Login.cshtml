@@ -5,10 +5,8 @@
 }
 
 
-<div class="row">
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-7">
         <h3>Iniciar Sesión</h3>
         <form asp-action="Login">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -32,10 +30,10 @@
             <div class="form-group mt-2">
                 <input type="submit" value="Iniciar Sesión" class="btn btn-outline-primary" />
                 <a asp-action="Register" class="btn btn-outline-secondary">Registrar Nuevo Usuario</a>
+                <a asp-action="RecoverPassword" class="btn btn-link">¿Has olvidado tu contraseña?</a>
+
             </div>
         </form>
-    </div>
-    <div class="col-md-4">
     </div>
 </div>
 
