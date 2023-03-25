@@ -34,7 +34,7 @@ namespace Shopping.Data.Entities
 
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7057/images/noimage.png"
+            ? $"https://localhost:7227/images/noimage.png"
             : $"https://shoppingdev.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]
