@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
 using Shopping.Data.Entities;
+using Vereyon.Web;
 
 namespace Shopping.Controllers
 {
@@ -10,9 +11,12 @@ namespace Shopping.Controllers
     public class CategoriesController : Controller
     {
         public readonly DataContext _context;
-        public CategoriesController(DataContext context)
+        private readonly IFlashMessage _flashMessage;
+
+        public CategoriesController(DataContext context, IFlashMessage flashMessage)
         {
             _context = context;
+            _flashMessage = flashMessage;
         }
 
         public async Task<IActionResult> Index()
@@ -63,16 +67,16 @@ namespace Shopping.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                        _flashMessage.Danger("There are a record with the same name.");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _flashMessage.Danger(string.Empty, dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception e)
                 {
-                    ModelState.AddModelError(string.Empty, e.Message);
+                    _flashMessage.Danger(string.Empty, e.Message);
                 }
             }
             return View(category);
@@ -116,16 +120,16 @@ namespace Shopping.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                        _flashMessage.Danger(string.Empty, "There are a record with the same name.");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _flashMessage.Danger(string.Empty, dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception e)
                 {
-                    ModelState.AddModelError(string.Empty, e.Message);
+                    _flashMessage.Danger(string.Empty, e.Message);
                 }
 
             }
@@ -155,17 +159,10 @@ namespace Shopping.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Categories == null)
-            {
-                return Problem("Entity set 'DataContext.Categories'  is null.");
-            }
             var category = await _context.Categories.FindAsync(id);
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
-            }
-
+             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
+            _flashMessage.Info("Registro borrado.");
             return RedirectToAction(nameof(Index));
         }
     }
