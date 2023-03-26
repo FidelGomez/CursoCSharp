@@ -103,7 +103,6 @@ namespace Shopping.Data
             return user;
         }
 
-
         private async Task CheckRolesAsync()
         {
             await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
@@ -246,13 +245,15 @@ namespace Shopping.Data
         {
             if (!_context.Categories.Any())
             {
-                _context.Categories.Add(new Category { Name = "Tecnologia" });
+                _context.Categories.Add(new Category { Name = "Tecnología" });
                 _context.Categories.Add(new Category { Name = "Ropa" });
-                _context.Categories.Add(new Category { Name = "Calzado" });
                 _context.Categories.Add(new Category { Name = "Gamer" });
+                _context.Categories.Add(new Category { Name = "Belleza" });
                 _context.Categories.Add(new Category { Name = "Nutrición" });
-                _context.Categories.Add(new Category { Name = "Bellleza" });
+                _context.Categories.Add(new Category { Name = "Calzado" });
                 _context.Categories.Add(new Category { Name = "Deportes" });
+                _context.Categories.Add(new Category { Name = "Mascotas" });
+                _context.Categories.Add(new Category { Name = "Apple" });
             }
             await _context.SaveChangesAsync();
         }
