@@ -27,8 +27,8 @@ namespace Shopping.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<State>().HasIndex("Name","CountryId").IsUnique();
             modelBuilder.Entity<City>().HasIndex("Name","StateId").IsUnique();
             modelBuilder.Entity<Product>().HasIndex(c => c.Name).IsUnique();

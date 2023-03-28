@@ -22,14 +22,13 @@ namespace Shopping.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckCategoriesAsync();
-            await CheckProductsAsync();
             await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Juan", "Zuluaga", "zulu@yopmail.com   ", "322 311 4620", "Calle Luna Calle Sol", "JuanZuluaga.jpeg", UserType.Admin);
             await CheckUserAsync("2020", "Ledys", "Bedoya", "ledys@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", "LedysBedoya.jpeg", UserType.User);
             await CheckUserAsync("3030", "Brad", "Pitt", "brad@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", "Brad.jpg", UserType.User);
             await CheckUserAsync("4040", "Angelina", "Jolie", "angelina@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", "Angelina.jpg", UserType.User);
-
+            await CheckProductsAsync();
         }
 
         private async Task CheckProductsAsync()
@@ -93,7 +92,7 @@ namespace Shopping.Data
                     ImageId = imageId
                 };
 
-                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserAsync(user, "CursoDeZulu2020.");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
 
                 string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
@@ -254,8 +253,8 @@ namespace Shopping.Data
                 _context.Categories.Add(new Category { Name = "Deportes" });
                 _context.Categories.Add(new Category { Name = "Mascotas" });
                 _context.Categories.Add(new Category { Name = "Apple" });
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
         }
 
         private async Task AddProductAsync(string name, decimal price, float stock, List<string> categories, List<string> images)
