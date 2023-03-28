@@ -29,24 +29,6 @@ namespace Shopping.Controllers
 
         }
 
-        // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
-        }
-
         [NoDirectAccess]
         public async Task<IActionResult> Delete(int? id)
         {
