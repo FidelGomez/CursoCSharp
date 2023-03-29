@@ -28,7 +28,7 @@ namespace Shopping.Helpers
 
         public async Task<User> AddUserAsync(AddUserViewModel model)
         {
-            User user = new User
+            User user = new()
             {
                 Address = model.Address,
                 Document = model.Document,
@@ -71,7 +71,7 @@ namespace Shopping.Helpers
             {
                 await _roleManager.CreateAsync(new IdentityRole
                 {
-                    Name = roleName,
+                    Name = roleName
                 });
             }
         }

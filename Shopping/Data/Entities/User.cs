@@ -38,7 +38,7 @@ namespace Shopping.Data.Entities
             : $"https://shoppingdev.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]
-        public UserType UserType { get; set; }
+        public UserType? UserType { get; set; }
 
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";

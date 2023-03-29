@@ -53,7 +53,7 @@ SeedData();
 
 void SeedData()
 {
-    IServiceScopeFactory? scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+    IServiceScopeFactory? scopeFactory = app.Services.GetService<IServiceScopeFactory>();
     using (IServiceScope scope = scopeFactory.CreateScope())
     {
         SeedDB? seeder = scope.ServiceProvider.GetService<SeedDB>();
